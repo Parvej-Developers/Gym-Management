@@ -251,6 +251,7 @@ async function fetchDashboardStats() {
       d.setDate(d.getDate() - i);
       const dateStr = d.toISOString().split('T')[0];
       const display = d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+
       const { count, error } = await supabase
         .from('attendance')
         .select('id', { count: 'exact', head: true })
@@ -297,10 +298,7 @@ function initializeChart() {
       maintainAspectRatio: false,
       plugins: { legend: { display: false } },
       scales: {
-        y: {
-          beginAtZero: true,
-          ticks: { precision: 0 }
-        }
+        y: { beginAtZero: true, ticks: { precision: 0 } }
       }
     }
   });
@@ -337,18 +335,22 @@ function updateDashboardUI() {
    ========================================================================= */
 
 function initializeNavigation() {
-hamburger?.addEventListener('click', () => {
-  hamburger.classList.toggle('active');
-});
 
-  sidebarLinks && sidebarLinks.forEach(link => {
-    link.addEventListener('click', (e) => {
-      e.preventDefault();
-      const view = link.dataset.view;
-      renderView(view);
-      sidebar.classList.remove('active');
-    });
+  /* >>> FIXED HAMBURGER MENU <<< */
+  hamburger?.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    sidebar.classList.toggle('active');   // THE FIX
   });
+
+  sidebarLinks &&
+    sidebarLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const view = link.dataset.view;
+        renderView(view);
+        sidebar.classList.remove('active');
+      });
+    });
 
   logoutBtn?.addEventListener('click', handleLogout);
   sidebarLogout?.addEventListener('click', handleLogout);
@@ -356,6 +358,7 @@ hamburger?.addEventListener('click', () => {
 
 function renderView(viewName) {
   currentView = viewName;
+
   sidebarLinks.forEach(link => {
     if (link.dataset.view === viewName) link.classList.add('active');
     else link.classList.remove('active');
@@ -422,9 +425,11 @@ function renderUsersTable(searchTerm = '') {
   const filtered = users.filter(u => {
     if (!searchTerm) return true;
     const term = searchTerm.toLowerCase();
-    return (u.name || '').toLowerCase().includes(term) ||
-           (u.email || '').toLowerCase().includes(term) ||
-           (u.phone || '').includes(term);
+    return (
+      (u.name || '').toLowerCase().includes(term) ||
+      (u.email || '').toLowerCase().includes(term) ||
+      (u.phone || '').includes(term)
+    );
   });
 
   usersTableBody.innerHTML = filtered.map(u => `
@@ -484,8 +489,11 @@ async function renderAttendanceTable() {
   await fetchAttendanceByDate(dateFilter);
 
   let filtered = attendance;
+
   if (searchTerm) {
-    filtered = filtered.filter(a => (a.user_name || '').toLowerCase().includes(searchTerm));
+    filtered = filtered.filter(a =>
+      (a.user_name || '').toLowerCase().includes(searchTerm)
+    );
   }
 
   if (!filtered.length) {
@@ -518,6 +526,7 @@ function calculateDuration() {
     const start = new Date(`2000-01-01 ${checkIn}`);
     const end = new Date(`2000-01-01 ${checkOut}`);
     const diff = end - start;
+
     if (diff > 0) {
       const minutes = Math.floor(diff / 60000);
       const hours = Math.floor(minutes / 60);
@@ -536,7 +545,7 @@ function calculateDuration() {
 
 
 /* =========================================================================
-   START: Modal Logic (Users, Attendance, Delete)
+   START: Modal Logic
    ========================================================================= */
 
 function initializeModals() {
@@ -574,7 +583,8 @@ function openUserModal(userId = null) {
       document.getElementById('userStatus').value = user.status;
       editingUserId = userId;
     }
-  } 
+  }
+
   userModal.classList.add('active');
 }
 
@@ -625,8 +635,12 @@ function openAttendanceModal() {
 
   const userSelect = document.getElementById('attendanceUser');
   if (userSelect) {
-    userSelect.innerHTML = '<option value="">Choose a user</option>' +
-      users.filter(u => u.status === 'Active').map(u => `<option value="${u.id}">${u.name}</option>`).join('');
+    userSelect.innerHTML =
+      '<option value="">Choose a user</option>' +
+      users
+        .filter(u => u.status === 'Active')
+        .map(u => `<option value="${u.id}">${u.name}</option>`)
+        .join('');
   }
 
   let markAllRow = document.getElementById('attendanceMarkAllRow');
@@ -636,7 +650,9 @@ function openAttendanceModal() {
     markAllRow.className = 'form-group';
     markAllRow.id = 'attendanceMarkAllRow';
     markAllRow.innerHTML = `
-      <label class="form-label"><input type="checkbox" id="markAllUsers" /> Mark attendance for ALL active users</label>
+      <label class="form-label">
+        <input type="checkbox" id="markAllUsers" /> Mark attendance for ALL active users
+      </label>
     `;
     formElement.querySelector('input[type="hidden"]')?.insertAdjacentElement('afterend', markAllRow);
   }
@@ -704,13 +720,13 @@ async function saveAttendanceFromModal() {
         return;
       }
 
-      const rec = { 
-        user_id: userId, 
-        date, 
+      const rec = {
+        user_id: userId,
+        date,
         status,
-        check_in: checkIn, 
-        check_out: checkOut, 
-        duration 
+        check_in: checkIn,
+        check_out: checkOut,
+        duration
       };
 
       const res = await upsertAttendanceRecords(rec);
@@ -728,10 +744,10 @@ async function saveAttendanceFromModal() {
   }
 }
 
-
-window.confirmDeleteAttendance = function(attendanceId) {
+window.confirmDeleteAttendance = function (attendanceId) {
   deleteTarget = { type: 'attendance', id: attendanceId };
-  document.getElementById('deleteMessage').textContent = 'Are you sure you want to delete this attendance record?';
+  document.getElementById('deleteMessage').textContent =
+    'Are you sure you want to delete this attendance record?';
   deleteModal.classList.add('active');
 };
 
@@ -751,7 +767,7 @@ function closeDeleteModal() {
   deleteTarget = null;
 }
 /* =========================================================================
-   END: Modal Logic (Users, Attendance, Delete)
+   END: Modal Logic
    ========================================================================= */
 
 
