@@ -1,37 +1,210 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="style.css"> <title>Royal Gym | Login</title>
-</head>
-<body>
+  <head>
+    <!-- START: Meta Tags and Title -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - FitPro</title>
+    <!-- Link to the main stylesheet -->
+    <link rel="stylesheet" href="styles/style.css" />
+    <!-- END: Meta Tags and Title -->
 
-    <div class="login-container">
-        <form action="#" class="login-form">
-            <h1>Royal <span>Login</span></h1>
-            <div class="input-box">
-                <input type="email" placeholder="Email or Username" required>
-                <i class='bx bxs-user'></i>
-            </div>
-            <div class="input-box">
-                <input type="password" placeholder="Password" required>
-                <i class='bx bxs-lock-alt'></i>
-            </div>
-            
-            <div class="remember-forgot">
-                <label><input type="checkbox"> Remember me</label>
-                <a href="#">Forgot Password?</a>
-            </div>
+    <!-- START: Inline Styles for Auth Pages -->
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap");
 
-            <button type="submit" class="btn">Login</button>
+      body {
+        font-family: "Mulish", sans-serif;
+      }
+      .auth-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #000 0%, #111 100%);
+      }
+      .auth-box {
+        background: rgba(17, 17, 17, 0.8);
+        border: 1px solid rgba(255, 69, 69, 0.2);
+        border-radius: 15px;
+        padding: 40px;
+        width: 100%;
+        max-width: 400px;
+        box-shadow: 0 10px 40px rgba(255, 69, 69, 0.1);
+      }
+      .auth-box h2 {
+        color: #ff4545;
+        margin-bottom: 30px;
+        text-align: center;
+        font-size: 2rem;
+      }
+      .form-group {
+        margin-bottom: 20px;
+      }
+      .form-group label {
+        display: block;
+        color: #ffffffa4;
+        margin-bottom: 8px;
+        font-weight: 500;
+      }
+      .form-group input {
+        width: 100%;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        color: white;
+        font-size: 1rem;
+        transition: 0.3s;
+      }
+      .form-group input:focus {
+        outline: none;
+        border-color: #ff4545;
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .btn-login {
+        width: 100%;
+        padding: 12px;
+        background: #ff4545;
+        border: none;
+        border-radius: 8px;
+        color: white;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: 0.3s;
+        margin-top: 20px;
+      }
+      .btn-login:hover {
+        background: #cc3333;
+        box-shadow: 0 0 20px rgba(255, 69, 69, 0.5);
+      }
+      .btn-login:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+      .auth-link {
+        text-align: center;
+        color: #ffffffa4;
+        margin-top: 15px;
+      }
+      .auth-link a {
+        color: #ff4545;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .error-message {
+        color: #ff6b6b;
+        padding: 10px;
+        border-radius: 6px;
+        background: rgba(255, 107, 107, 0.1);
+        margin-bottom: 15px;
+        display: none;
+      }
+      .loading {
+        display: none;
+        text-align: center;
+        color: #ff4545;
+      }
+    </style>
+    <!-- END: Inline Styles for Auth Pages -->
+  </head>
+  <body>
+    <!-- START: Login Container -->
+    <div class="auth-container">
+      <div class="auth-box">
+        <h2>Login</h2>
+        <div id="errorMessage" class="error-message"></div>
 
-            <div class="register-link">
-                <p>Don't have an account? <a href="#">Register</a></p>
-            </div>
+        <!-- Login Form -->
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="loginEmail">Email</label>
+            <input
+              type="email"
+              id="loginEmail"
+              required
+              placeholder="your@email.com"
+              autocomplete="email"
+            />
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input
+              type="password"
+              id="loginPassword"
+              required
+              placeholder="Enter password"
+              autocomplete="current-password"
+            />
+          </div>
+          <div id="loading" class="loading">Logging in...</div>
+          <button type="submit" class="btn-login" id="loginBtn">Login</button>
         </form>
-    </div>
 
-</body>
+        <!-- Registration Link -->
+        <div class="auth-link">
+          Don't have an account? <a href="registration.html">Register here</a>
+        </div>
+      </div>
+    </div>
+    <!-- END: Login Container -->
+
+    <!-- START: Login Script (Type: module) -->
+    <script type="module">
+      import { loginUser } from "./js/auth.js";
+
+      // DOM Elements
+      const form = document.getElementById("loginForm");
+      const emailInput = document.getElementById("loginEmail");
+      const passwordInput = document.getElementById("loginPassword");
+      const errorDiv = document.getElementById("errorMessage");
+      const loadingDiv = document.getElementById("loading");
+      const loginBtn = document.getElementById("loginBtn");
+
+      // Event Listener for Form Submission
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        // Reset UI state
+        errorDiv.style.display = "none";
+        errorDiv.textContent = "";
+        loadingDiv.style.display = "block";
+        loginBtn.disabled = true;
+
+        // Call login function
+        const result = await loginUser(email, password);
+
+        // Update UI state after attempt
+        loadingDiv.style.display = "none";
+        loginBtn.disabled = false;
+
+        if (result.success) {
+          console.log("✅ Login successful, redirecting...");
+
+          // Determine redirect URL
+          const urlParams = new URLSearchParams(window.location.search);
+          const redirectTo = urlParams.get("redirect") || "index.html";
+
+          // Redirect logic (based on role)
+          if (result.role === "admin") {
+            console.log("👨‍💼 Redirecting to admin dashboard");
+            window.location.href = "admin-dashboard.html";
+          } else {
+            console.log("👤 Redirecting to user page:", redirectTo);
+            window.location.href = redirectTo;
+          }
+        } else {
+          console.error("❌ Login failed:", result.error);
+          errorDiv.textContent =
+            result.error || "Login failed. Check your credentials.";
+          errorDiv.style.display = "block";
+        }
+      });
+    </script>
+    <!-- END: Login Script (Type: module) -->
+  </body>
 </html>

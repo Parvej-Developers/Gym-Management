@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- START: Meta Tags and Title -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register - FitPro</title>
+    <!-- Link to the main stylesheet -->
+    <link rel="stylesheet" href="styles/style.css" />
+    <!-- END: Meta Tags and Title -->
+
+    <!-- START: Inline Styles for Auth Pages -->
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap");
+      body {
+        font-family: "Mulish", sans-serif;
+      }
+      .auth-container {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #000 0%, #111 100%);
+        padding: 20px;
+      }
+      .auth-box {
+        background: rgba(17, 17, 17, 0.8);
+        border: 1px solid rgba(255, 69, 69, 0.2);
+        border-radius: 15px;
+        padding: 40px;
+        width: 100%;
+        max-width: 450px;
+        box-shadow: 0 10px 40px rgba(255, 69, 69, 0.1);
+      }
+      .auth-box h2 {
+        color: #ff4545;
+        margin-bottom: 30px;
+        text-align: center;
+        font-size: 2rem;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      .form-group label {
+        display: block;
+        color: #ffffffa4;
+        margin-bottom: 8px;
+        font-weight: 500;
+        font-size: 0.95rem;
+      }
+      .form-group input {
+        width: 100%;
+        padding: 10px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 8px;
+        color: white;
+        font-size: 0.95rem;
+        transition: 0.3s;
+      }
+      .form-group input:focus {
+        outline: none;
+        border-color: #ff4545;
+        background: rgba(255, 255, 255, 0.08);
+      }
+      .btn-register {
+        width: 100%;
+        padding: 12px;
+        background: #ff4545;
+        border: none;
+        border-radius: 8px;
+        color: white;
+        font-weight: 600;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: 0.3s;
+        margin-top: 20px;
+      }
+      .btn-register:hover {
+        background: #cc3333;
+        box-shadow: 0 0 20px rgba(255, 69, 69, 0.5);
+      }
+      .btn-register:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+      .auth-link {
+        text-align: center;
+        color: #ffffffa4;
+        margin-top: 15px;
+      }
+      .auth-link a {
+        color: #ff4545;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .error-message {
+        color: #ff6b6b;
+        padding: 10px;
+        border-radius: 6px;
+        background: rgba(255, 107, 107, 0.1);
+        margin-bottom: 15px;
+        display: none;
+      }
+      .success-message {
+        color: #10b981;
+        padding: 10px;
+        border-radius: 6px;
+        background: rgba(16, 185, 129, 0.1);
+        margin-bottom: 15px;
+        display: none;
+      }
+      .loading {
+        display: none;
+        text-align: center;
+        color: #ff4545;
+      }
+    </style>
+    <!-- END: Inline Styles for Auth Pages -->
+  </head>
+  <body>
+    <!-- START: Registration Container -->
+    <div class="auth-container">
+      <div class="auth-box">
+        <h2>Create Account</h2>
+        <div id="errorMessage" class="error-message"></div>
+        <div id="successMessage" class="success-message"></div>
+
+        <!-- Registration Form -->
+        <form id="registerForm">
+          <div class="form-group">
+            <label for="fullName">Full Name *</label>
+            <input
+              type="text"
+              id="fullName"
+              required
+              placeholder="John Doe"
+              autocomplete="name"
+            />
+          </div>
+          <div class="form-group">
+            <label for="regEmail">Email *</label>
+            <input
+              type="email"
+              id="regEmail"
+              required
+              placeholder="your@email.com"
+              autocomplete="email"
+            />
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input
+              type="tel"
+              id="phone"
+              placeholder="9876543210"
+              autocomplete="tel"
+            />
+          </div>
+          <div class="form-group">
+            <label for="regPassword">Password *</label>
+            <input
+              type="password"
+              id="regPassword"
+              required
+              placeholder="Min. 6 characters"
+              autocomplete="new-password"
+            />
+          </div>
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password *</label>
+            <input
+              type="password"
+              id="confirmPassword"
+              required
+              placeholder="Confirm password"
+              autocomplete="new-password"
+            />
+          </div>
+          <div id="loading" class="loading">Creating account...</div>
+          <button type="submit" class="btn-register" id="registerBtn">
+            Create Account
+          </button>
+        </form>
+
+        <!-- Login Link -->
+        <div class="auth-link">
+          Already have an account? <a href="login.html">Login here</a>
+        </div>
+      </div>
+    </div>
+    <!-- END: Registration Container -->
+
+    <!-- START: Registration Script (Type: module) -->
+    <script type="module">
+      import { registerUser } from "./js/auth.js";
+
+      // DOM Elements
+      const form = document.getElementById("registerForm");
+      const fullNameInput = document.getElementById("fullName");
+      const emailInput = document.getElementById("regEmail");
+      const phoneInput = document.getElementById("phone");
+      const passwordInput = document.getElementById("regPassword");
+      const confirmPasswordInput = document.getElementById("confirmPassword");
+      const errorDiv = document.getElementById("errorMessage");
+      const successDiv = document.getElementById("successMessage");
+      const loadingDiv = document.getElementById("loading");
+      const registerBtn = document.getElementById("registerBtn");
+
+      // Event Listener for Form Submission
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const fullName = fullNameInput.value.trim();
+        const email = emailInput.value.trim();
+        const phone = phoneInput.value.trim();
+        const password = passwordInput.value;
+        const confirmPassword = confirmPasswordInput.value;
+
+        // Clear previous messages
+        errorDiv.style.display = "none";
+        errorDiv.textContent = "";
+        successDiv.style.display = "none";
+        successDiv.textContent = "";
+
+        // --- Client-Side Validation ---
+        if (!fullName || !email || !password || !confirmPassword) {
+          errorDiv.textContent = "All required fields must be filled.";
+          errorDiv.style.display = "block";
+          return;
+        }
+
+        if (password.length < 6) {
+          errorDiv.textContent = "Password must be at least 6 characters.";
+          errorDiv.style.display = "block";
+          return;
+        }
+
+        if (password !== confirmPassword) {
+          errorDiv.textContent = "Passwords do not match.";
+          errorDiv.style.display = "block";
+          return;
+        }
+        // --- END: Client-Side Validation ---
+
+        loadingDiv.style.display = "block";
+        registerBtn.disabled = true;
+
+        // Call registration function
+        const result = await registerUser(email, password, fullName, phone);
+
+        loadingDiv.style.display = "none";
+        registerBtn.disabled = false;
+
+        if (result.success) {
+          console.log("✅ Registration successful");
+          successDiv.textContent =
+            result.message || "Account created successfully!";
+          successDiv.style.display = "block";
+
+          // Clear form and redirect
+          form.reset();
+          setTimeout(() => {
+            window.location.href = "login.html";
+          }, 2000);
+        } else {
+          console.error("❌ Registration failed:", result.error);
+          errorDiv.textContent =
+            result.error || "Registration failed. Please try again.";
+          errorDiv.style.display = "block";
+        }
+      });
+    </script>
+    <!-- END: Registration Script (Type: module) -->
+  </body>
+</html>
