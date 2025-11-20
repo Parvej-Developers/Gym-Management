@@ -620,41 +620,74 @@ header {
 /* =========================================================================
    END: Responsive Design
    ========================================================================= */
-/* Improved Auth Buttons (Login / Dashboard / Logout) */
+/* ================= INTERACTIVE AUTH BUTTONS ================= */
 
 .auth-buttons .nav-btn {
-  padding: 1rem 2.4rem;
-  border-radius: 0.8rem;
+  position: relative;
+  display: inline-block;
+  padding: 1rem 2.6rem;
+  border-radius: 1rem;
   font-size: 1.7rem;
   font-weight: 700;
-  border: 2px solid var(--main-color);
   color: var(--main-color);
-  background: rgba(255, 69, 69, 0.08);
-  backdrop-filter: blur(4px);
-  transition: 0.3s ease-in-out;
-  margin-left: 1rem;
+  border: 2px solid var(--main-color);
+  background: rgba(255, 69, 69, 0.1);
+  backdrop-filter: blur(6px);
+  transition: 0.25s ease-out;
+  overflow: hidden;
 }
 
+/* Hover: subtle lift + glow */
 .auth-buttons .nav-btn:hover {
+  transform: translateY(-4px) scale(1.03);
   background: var(--main-color);
   color: var(--bg--color);
-  box-shadow: 0 0 12px var(--main-color);
-  transform: translateY(-2px);
+  box-shadow: 0 0 18px rgba(255, 69, 69, 0.7);
 }
 
-/* Mobile enhancement */
+/* Click: push-down feel */
+.auth-buttons .nav-btn:active {
+  transform: scale(0.95);
+  box-shadow: 0 0 10px rgba(255, 69, 69, 0.5);
+}
+
+/* Shine animation */
+.auth-buttons .nav-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(255, 255, 255, 0.4),
+    transparent
+  );
+  transform: skewX(-20deg);
+  transition: 0.4s;
+}
+
+.auth-buttons .nav-btn:hover::after {
+  left: 120%;
+}
+
+/* MOBILE OPTIMIZATION */
 @media (max-width: 991px) {
   .auth-buttons {
     display: flex;
+    width: 100%;
     gap: 1rem;
     margin-top: 2rem;
+    justify-content: center;
   }
 
   .auth-buttons .nav-btn {
     width: 100%;
     text-align: center;
-    padding: 1.2rem 0;
-    font-size: 1.9rem;
+    padding: 1.4rem 0;
+    font-size: 2rem;
     border-radius: 1.2rem;
   }
 }
