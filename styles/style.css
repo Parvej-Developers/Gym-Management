@@ -691,3 +691,42 @@ header {
     border-radius: 1.2rem;
   }
 }
+/* ================= MOBILE HEADER FIX ================= */
+@media (max-width: 991px) {
+  /* Turn header into 3-column layout */
+  header {
+    display: grid;
+    grid-template-columns: 40px 1fr auto;
+    align-items: center;
+    padding: 1.2rem 4%;
+  }
+
+  /* LEFT: Menu icon */
+  #menu-icon {
+    order: 1;
+    display: block;
+    font-size: 3.8rem;
+  }
+
+  /* CENTER: Logo */
+  .logo {
+    order: 2;
+    text-align: center;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  /* RIGHT: Auth Buttons */
+  .auth-buttons {
+    order: 3;
+    display: flex;
+    gap: 0.8rem;
+  }
+
+  /* Make auth buttons smaller but still interactive */
+  .auth-buttons .nav-btn {
+    padding: 0.8rem 1.4rem;
+    font-size: 1.6rem;
+    white-space: nowrap;
+  }
+}
