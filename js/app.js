@@ -370,9 +370,13 @@ function renderView(viewName) {
   });
 
   if (viewName === 'dashboard') {
-    updateDashboardUI();
-    initializeChart();
-  } else if (viewName === 'users') {
+    (async () => {
+        const today = new Date().toISOString().split('T')[0];
+        await fetchAttendanceByDate(today);
+        updateDashboardUI();
+        initializeChart();
+    })();
+} else if (viewName === 'users') {
     renderUsersTable();
   } else if (viewName === 'attendance') {
     renderAttendanceTable();
