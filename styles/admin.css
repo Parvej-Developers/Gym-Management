@@ -1,53 +1,25 @@
-@import url("https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap");
-
 /* =========================================================================
-   START: Variables and Theme Definition
+   START: Core CSS Definitions
    ========================================================================= */
-:root {
-  /* Main Colors */
-  --bg: #000;
-  --surface: #111;
-  --text: #ffffffa4;
-  --text-light: #ffffff7a;
-  --border: rgba(255, 69, 69, 0.3);
-
-  /* Primary Theme */
-  --primary: #ff4545;
-  --primary-hover: #ff2e2e;
-  --primary-light: #ff6969;
-
-  /* Status Colors */
-  --success: #21808d;
-  --warning: #a84b2f;
-  --error: #ff4545;
-  --info: #ffffff7a;
-}
-/* =========================================================================
-   END: Variables and Theme Definition
-   ========================================================================= */
-
-/* =========================================================================
-   START: Base and Typography Styles
-   ========================================================================= */
-* {
-  margin: 0;
-  padding: 0;
+html {
+  font-size: 14px;
+  font-family: "Inter", sans-serif;
+  line-height: 1.5;
+  color: #ffffffa4;
+  background-color: #000;
+  -webkit-font-smoothing: antialiased;
   box-sizing: border-box;
 }
 
-html {
-  font-size: 14px;
-  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-    sans-serif;
-  line-height: 1.5;
-  -webkit-font-smoothing: antialiased;
+body {
+  margin: 0;
+  padding: 0;
 }
 
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: "Mulish", sans-serif;
-  overflow-x: hidden;
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
 }
 
 h1,
@@ -57,9 +29,10 @@ h4,
 h5,
 h6 {
   margin: 0;
-  font-weight: 600;
+  font-weight: 550;
   line-height: 1.2;
-  color: var(--text);
+  color: #ffffffa4;
+  letter-spacing: -0.01em;
 }
 
 h1 {
@@ -86,28 +59,32 @@ p {
 }
 
 a {
-  color: var(--primary);
+  color: #ff4545;
   text-decoration: none;
-  transition: color 150ms ease;
+  transition: color 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 a:hover {
-  color: var(--primary-hover);
+  color: #ff4545;
 }
 
 code,
 pre {
-  font-family: "Monaco", monospace;
-  font-size: 13px;
-  background-color: rgba(0, 0, 0, 0.05);
+  font-family: Menlo, Monaco, monospace;
+  font-size: calc(14px * 0.95);
+  background-color: #000;
   border-radius: 6px;
+}
+
+code {
+  padding: 1px 4px;
 }
 
 pre {
   padding: 16px;
   margin: 16px 0;
   overflow: auto;
-  border: 1px solid var(--border);
+  border: 1px solid #222;
 }
 
 pre code {
@@ -115,11 +92,358 @@ pre code {
   padding: 0;
 }
 /* =========================================================================
-   END: Base and Typography Styles
+   END: Core CSS Definitions
    ========================================================================= */
 
 /* =========================================================================
-   START: Layout (Header, Sidebar, Main Container)
+   START: Buttons
+   ========================================================================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.5;
+  cursor: pointer;
+  transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1);
+  border: none;
+  text-decoration: none;
+  position: relative;
+}
+
+.btn:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(255, 69, 69, 0.35);
+}
+
+.btn--primary {
+  background: #ff4545;
+  color: #fff;
+}
+
+.btn--primary:hover {
+  background: #ff4545;
+}
+
+.btn--primary:active {
+  background: #ff4545;
+}
+
+.btn--secondary {
+  background: #000;
+  color: #ffffffa4;
+}
+
+.btn--secondary:hover {
+  background: #000;
+}
+
+.btn--secondary:active {
+  background: #000;
+}
+
+.btn--outline {
+  background: transparent;
+  border: 1px solid #222;
+  color: #ffffffa4;
+}
+
+.btn--outline:hover {
+  background: #000;
+}
+
+.btn--sm {
+  padding: 4px 12px;
+  font-size: 12px;
+  border-radius: 6px;
+}
+
+.btn--lg {
+  padding: 10px 20px;
+  font-size: 16px;
+  border-radius: 10px;
+}
+
+.btn--full-width {
+  width: 100%;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+/* =========================================================================
+   END: Buttons
+   ========================================================================= */
+
+/* =========================================================================
+   START: Form Elements
+   ========================================================================= */
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #ffffffa4;
+  background-color: #111;
+  border: 1px solid #222;
+  border-radius: 8px;
+  transition: border-color 150ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+textarea.form-control {
+  font-family: "Inter", sans-serif;
+  font-size: 14px;
+}
+
+select.form-control {
+  padding: 8px 12px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: #000;
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 32px;
+}
+
+@media (prefers-color-scheme: dark) {
+  select.form-control {
+    background-image: #000;
+  }
+}
+
+[data-color-scheme="dark"] select.form-control {
+  background-image: #000;
+}
+
+[data-color-scheme="light"] select.form-control {
+  background-image: #000;
+}
+
+.form-control:focus {
+  border-color: #ff4545;
+  outline: 2px solid #ff4545;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.form-group {
+  margin-bottom: 16px;
+}
+/* =========================================================================
+   END: Form Elements
+   ========================================================================= */
+
+/* =========================================================================
+   START: Card Component
+   ========================================================================= */
+.card {
+  background-color: #111;
+  border-radius: 12px;
+  border: 1px solid #222;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  overflow: hidden;
+  transition: box-shadow 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.card:hover {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.14);
+}
+
+.card__body {
+  padding: 16px;
+}
+
+.card__header,
+.card__footer {
+  padding: 16px;
+  border-bottom: 1px solid #333;
+}
+/* =========================================================================
+   END: Card Component
+   ========================================================================= */
+
+/* =========================================================================
+   START: Status Indicators
+   ========================================================================= */
+.status {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 9999px;
+  font-weight: 500;
+  font-size: 12px;
+}
+
+.status--success {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #21c58d;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.status--error {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #e74c3c;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.status--warning {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #f0ad4e;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.status--info {
+  background-color: rgba(0, 0, 0, 0.05);
+  color: #3498db;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+/* =========================================================================
+   END: Status Indicators
+   ========================================================================= */
+
+/* =========================================================================
+   START: Container Layout
+   ========================================================================= */
+.container {
+  width: 100%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-right: 16px;
+  padding-left: 16px;
+}
+
+@media (min-width: 640px) {
+  .container {
+    max-width: 640px;
+  }
+}
+@media (min-width: 768px) {
+  .container {
+    max-width: 768px;
+  }
+}
+@media (min-width: 1024px) {
+  .container {
+    max-width: 1024px;
+  }
+}
+@media (min-width: 1280px) {
+  .container {
+    max-width: 1280px;
+  }
+}
+/* =========================================================================
+   END: Container Layout
+   ========================================================================= */
+
+/* =========================================================================
+   START: Utility Classes
+   ========================================================================= */
+.flex {
+  display: flex;
+}
+.flex-col {
+  flex-direction: column;
+}
+.items-center {
+  align-items: center;
+}
+.justify-center {
+  justify-content: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.gap-4 {
+  gap: 4px;
+}
+.gap-8 {
+  gap: 8px;
+}
+.gap-16 {
+  gap: 16px;
+}
+
+.m-0 {
+  margin: 0;
+}
+.mt-8 {
+  margin-top: 8px;
+}
+.mb-8 {
+  margin-bottom: 8px;
+}
+.mx-8 {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+.my-8 {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+.p-0 {
+  padding: 0;
+}
+.py-8 {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+.px-8 {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.py-16 {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+.px-16 {
+  padding-left: 16px;
+  padding-right: 16px;
+}
+
+.block {
+  display: block;
+}
+.hidden {
+  display: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+:focus-visible {
+  outline: 2px solid #ff4545;
+  outline-offset: 2px;
+}
+/* =========================================================================
+   END: Utility Classes
+   ========================================================================= */
+
+/* =========================================================================
+   START: Admin Layout Styles
    ========================================================================= */
 .header {
   position: fixed;
@@ -127,13 +451,14 @@ pre code {
   left: 0;
   right: 0;
   height: 64px;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
+  background: #111;
+  border-bottom: 1px solid #222;
   display: flex;
   align-items: center;
   padding: 0 24px;
   z-index: 100;
   gap: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
 .hamburger {
@@ -144,19 +469,25 @@ pre code {
   border: none;
   cursor: pointer;
   padding: 8px;
+  border-radius: 8px;
+  transition: background 150ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.hamburger:hover {
+  background: #000;
 }
 
 .hamburger span {
   width: 24px;
   height: 2px;
-  background: var(--text);
-  transition: all 250ms ease;
+  background: #ffffffa4;
+  transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .header-brand h1 {
   font-size: 18px;
-  font-weight: 600;
-  color: var(--text);
+  font-weight: 550;
+  color: #ffffffa4;
 }
 
 .header-actions {
@@ -174,13 +505,13 @@ pre code {
 
 .user-name {
   font-size: 12px;
-  font-weight: 600;
-  color: var(--text);
+  font-weight: 550;
+  color: #ffffffa4;
 }
 
 .user-role {
   font-size: 11px;
-  color: var(--text-light);
+  color: #ffffffa4;
 }
 
 .main-container {
@@ -191,8 +522,8 @@ pre code {
 
 .sidebar {
   width: 260px;
-  background: var(--surface);
-  border-right: 1px solid var(--border);
+  background: #111;
+  border-right: 1px solid #222;
   padding: 24px 0;
   display: flex;
   flex-direction: column;
@@ -200,7 +531,7 @@ pre code {
   left: 0;
   top: 64px;
   bottom: 0;
-  transition: transform 250ms ease;
+  transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1);
   z-index: 90;
 }
 
@@ -218,19 +549,19 @@ pre code {
   gap: 12px;
   padding: 12px 16px;
   border-radius: 8px;
-  color: var(--text);
+  color: #ffffffa4;
   text-decoration: none;
-  transition: all 150ms ease;
+  transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
   font-weight: 500;
 }
 
 .sidebar-link:hover {
-  background: rgba(0, 0, 0, 0.05);
+  background: #000;
 }
 
 .sidebar-link.active {
-  background: var(--primary);
-  color: #fcfcf9;
+  background: #ff4545;
+  color: #fff;
 }
 
 .sidebar-link .icon {
@@ -246,22 +577,23 @@ pre code {
   flex: 1;
   margin-left: 260px;
   padding: 32px;
-  transition: margin-left 250ms ease;
+  transition: margin-left 250ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 /* =========================================================================
-   END: Layout (Header, Sidebar, Main Container)
+   END: Admin Layout Styles
    ========================================================================= */
 
 /* =========================================================================
-   START: Views and Dashboard Sections
+   START: Dashboard and View Styles
    ========================================================================= */
+
 .view {
   display: none;
 }
 
 .view.active {
   display: block;
-  animation: fadeIn 0.3s ease;
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes fadeIn {
@@ -286,12 +618,12 @@ pre code {
 
 .view-header h2 {
   font-size: 24px;
-  font-weight: 600;
-  color: var(--text);
+  font-weight: 550;
+  color: #ffffffa4;
 }
 
 .view-subtitle {
-  color: var(--text-light);
+  color: #ffffffa4;
   margin-top: 8px;
   font-size: 14px;
 }
@@ -309,16 +641,21 @@ pre code {
   display: flex;
   align-items: center;
   gap: 16px;
-  border: 1px solid var(--border);
-  transition: transform 150ms ease;
+  border: 1px solid #222;
+  background: #111;
+  transition: transform 150ms cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
 }
 
 .stat-card:hover {
   transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.14);
 }
 
 .stat-icon {
   font-size: 40px;
+  color: #ff4545;
 }
 
 .stat-content {
@@ -327,14 +664,14 @@ pre code {
 
 .stat-value {
   font-size: 24px;
-  font-weight: 600;
-  color: var(--text);
+  font-weight: 550;
+  color: #ffffffa4;
   margin-bottom: 4px;
 }
 
 .stat-label {
   font-size: 12px;
-  color: var(--text-light);
+  color: #ffffffa4;
   font-weight: 500;
 }
 
@@ -348,22 +685,12 @@ pre code {
   width: 100%;
 }
 /* =========================================================================
-   END: Views and Dashboard Sections
+   END: Dashboard and View Styles
    ========================================================================= */
 
 /* =========================================================================
-   START: Component Styles (Card, Table, Button, Form)
+   START: Data Table Styles
    ========================================================================= */
-.card {
-  background: var(--surface);
-  border-radius: 12px;
-  border: 1px solid var(--border);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
-}
-
-.card__body {
-  padding: 24px;
-}
 
 .table-container {
   overflow-x: auto;
@@ -378,124 +705,40 @@ pre code {
 .data-table th {
   text-align: left;
   padding: 12px;
-  border-bottom: 2px solid var(--border);
-  font-weight: 600;
-  color: var(--text);
+  border-bottom: 2px solid #222;
+  font-weight: 550;
+  color: #ffffffa4;
   white-space: nowrap;
+  font-size: 12px;
 }
 
 .data-table td {
   padding: 12px;
-  border-bottom: 1px solid var(--border);
-  color: var(--text);
+  border-bottom: 1px solid #333;
+  color: #ffffffa4;
 }
 
 .data-table tbody tr {
-  transition: background 150ms ease;
+  transition: background 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .data-table tbody tr:hover {
-  background: rgba(0, 0, 0, 0.02);
+  background: #000;
 }
+/* =========================================================================
+   END: Data Table Styles
+   ========================================================================= */
 
-/* Buttons */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 250ms ease;
-  border: none;
-  text-decoration: none;
-  gap: 8px;
-}
-
-.btn--primary {
-  background: var(--primary);
-  color: #fcfcf9;
-}
-
-.btn--primary:hover {
-  background: var(--primary-hover);
-}
-
-.btn--outline {
-  background: transparent;
-  border: 1px solid var(--border);
-  color: var(--text);
-}
-
-.btn--outline:hover {
-  background: rgba(0, 0, 0, 0.02);
-}
-
-.btn--sm {
-  padding: 6px 12px;
-  font-size: 12px;
-  border-radius: 6px;
-}
-
-.btn--full-width {
-  width: 100%;
-}
-
-.btn-icon {
-  padding: 6px;
-  min-width: 32px;
-  height: 32px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* Form Controls */
-.form-control {
-  display: block;
-  width: 100%;
-  padding: 8px 12px;
-  font-size: 14px;
-  line-height: 1.5;
-  color: var(--text);
-  background-color: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  transition: border-color 150ms ease;
-}
-
-.form-control:focus {
-  border-color: var(--primary);
-  outline: 2px solid var(--primary);
-  outline-offset: 0;
-}
-
-select.form-control {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  /* SVG background image is kept here for dropdown arrow */
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23134252' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 12px center;
-  background-size: 16px;
-  padding-right: 32px;
-}
-
-/* Using a simplified background image for dark theme consistency */
-/* The dark theme media query logic from the original file is simplified */
-select.form-control {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23ffffffa4' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-}
+/* =========================================================================
+   START: Form and Filter Styles
+   ========================================================================= */
 
 .form-label {
   display: block;
   margin-bottom: 8px;
   font-weight: 500;
   font-size: 12px;
-  color: var(--text);
+  color: #ffffffa4;
 }
 
 .form-group {
@@ -516,46 +759,53 @@ select.form-control {
   margin-bottom: 24px;
   flex-wrap: wrap;
 }
+/* =========================================================================
+   END: Form and Filter Styles
+   ========================================================================= */
 
-/* Status Badge */
+/* =========================================================================
+   START: Status Badge Styles
+   ========================================================================= */
 .status-badge {
   display: inline-flex;
-  padding: 4px 12px;
+  padding: 6px 12px;
   border-radius: 9999px;
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 550;
+  align-items: center;
 }
 
 .status-badge.success {
-  background: rgba(33, 128, 141, 0.15);
-  color: var(--success);
-  border: 1px solid rgba(33, 128, 141, 0.25);
+  background: rgba(0, 0, 0, 0.05);
+  color: #21c58d;
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .status-badge.warning {
-  background: rgba(168, 75, 47, 0.15);
-  color: var(--warning);
-  border: 1px solid rgba(168, 75, 47, 0.25);
+  background: rgba(0, 0, 0, 0.05);
+  color: #f0ad4e;
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .status-badge.error {
-  background: rgba(192, 21, 47, 0.15);
-  color: var(--error);
-  border: 1px solid rgba(192, 21, 47, 0.25);
+  background: rgba(0, 0, 0, 0.05);
+  color: #e74c3c;
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .status-badge.info {
-  background: rgba(98, 108, 113, 0.15);
-  color: var(--info);
-  border: 1px solid rgba(98, 108, 113, 0.25);
+  background: rgba(0, 0, 0, 0.05);
+  color: #3498db;
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 /* =========================================================================
-   END: Component Styles (Card, Table, Button, Form)
+   END: Status Badge Styles
    ========================================================================= */
 
 /* =========================================================================
    START: Modal Styles
    ========================================================================= */
+
 .modal {
   display: none;
   position: fixed;
@@ -570,7 +820,7 @@ select.form-control {
   display: flex;
   align-items: center;
   justify-content: center;
-  animation: modalFadeIn 0.2s ease;
+  animation: modalFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @keyframes modalFadeIn {
@@ -589,18 +839,20 @@ select.form-control {
   right: 0;
   bottom: 0;
   background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
 }
 
 .modal-content {
   position: relative;
-  background: var(--surface);
+  background: #111;
   border-radius: 12px;
   max-width: 500px;
   width: 90%;
   max-height: 90vh;
   overflow-y: auto;
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-  animation: modalSlideIn 0.3s ease;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.18);
+  animation: modalSlideIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  border: 1px solid #222;
 }
 
 @keyframes modalSlideIn {
@@ -616,7 +868,7 @@ select.form-control {
 
 .modal-header {
   padding: 24px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid #333;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -624,15 +876,15 @@ select.form-control {
 
 .modal-header h3 {
   font-size: 18px;
-  font-weight: 600;
-  color: var(--text);
+  font-weight: 550;
+  color: #ffffffa4;
 }
 
 .modal-close {
   background: none;
   border: none;
   font-size: 24px;
-  color: var(--text-light);
+  color: #ffffffa4;
   cursor: pointer;
   line-height: 1;
   padding: 0;
@@ -642,11 +894,12 @@ select.form-control {
   align-items: center;
   justify-content: center;
   border-radius: 6px;
-  transition: all 150ms ease;
+  transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .modal-close:hover {
-  background: rgba(0, 0, 0, 0.05);
+  background: #000;
+  color: #ffffffa4;
 }
 
 .modal-body {
@@ -655,7 +908,7 @@ select.form-control {
 
 .modal-footer {
   padding: 24px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid #333;
   display: flex;
   justify-content: flex-end;
   gap: 12px;
@@ -663,12 +916,14 @@ select.form-control {
 
 .duration-display {
   padding: 12px;
-  background: rgba(0, 0, 0, 0.05);
+  background: #000;
   border-radius: 8px;
-  font-weight: 600;
-  color: var(--text);
+  font-weight: 550;
+  color: #ffffffa4;
   text-align: center;
+  border: 1px solid #222;
 }
+
 /* =========================================================================
    END: Modal Styles
    ========================================================================= */
@@ -676,26 +931,29 @@ select.form-control {
 /* =========================================================================
    START: Toast Notification
    ========================================================================= */
+
 .toast {
   position: fixed;
   bottom: 24px;
   right: 24px;
-  background: #13343b; /* A darker background for visibility */
+  background: #ff4545;
   color: #fff;
   padding: 16px 24px;
   border-radius: 8px;
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.18);
   z-index: 2000;
   transform: translateY(100px);
   opacity: 0;
-  transition: all 250ms ease;
+  transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1);
   max-width: 400px;
+  border: 1px solid #222;
 }
 
 .toast.active {
   transform: translateY(0);
   opacity: 1;
 }
+
 /* =========================================================================
    END: Toast Notification
    ========================================================================= */
@@ -703,6 +961,7 @@ select.form-control {
 /* =========================================================================
    START: Responsive Design
    ========================================================================= */
+
 @media (max-width: 768px) {
   .hamburger {
     display: flex;
@@ -710,6 +969,7 @@ select.form-control {
 
   .sidebar {
     transform: translateX(-100%);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.18);
   }
 
   .sidebar.active {
@@ -750,17 +1010,144 @@ select.form-control {
     width: 95%;
   }
 
+  /* ===== MOBILE TABLE TO CARD LAYOUT ===== */
   .table-container {
-    -webkit-overflow-scrolling: touch;
+    overflow: visible;
   }
 
   .data-table {
-    font-size: 11px;
+    display: block;
+    width: 100%;
   }
 
-  .data-table th,
+  .data-table thead {
+    display: none;
+  }
+
+  .data-table tbody {
+    display: block;
+  }
+
+  .data-table tr {
+    display: block;
+    background: #111;
+    border: 1px solid #222;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .data-table tr::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: #ff4545;
+    transform: scaleY(0);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .data-table tr:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.14);
+  }
+
+  .data-table tr:hover::before {
+    transform: scaleY(1);
+  }
+
+  .data-table tr:active {
+    transform: translateY(-2px);
+    transition: transform 0.1s ease;
+  }
+
   .data-table td {
-    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border: none;
+    border-bottom: 1px solid #333;
+    font-size: 12px;
+  }
+
+  .data-table td:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .data-table td:first-child {
+    padding-top: 0;
+  }
+
+  /* Add labels before each data cell */
+  .data-table td::before {
+    content: attr(data-label);
+    font-weight: 550;
+    color: #ff4545;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+    flex-shrink: 0;
+    margin-right: 16px;
+  }
+
+  /* Action buttons in mobile cards */
+  .data-table td:has(.btn-icon) {
+    justify-content: flex-end;
+    gap: 8px;
+    padding-top: 12px;
+    margin-top: 8px;
+    border-top: 1px solid #333;
+  }
+
+  .data-table td:has(.btn-icon)::before {
+    content: "Actions";
+    margin-right: auto;
+  }
+
+  /* Status badges in mobile cards */
+  .data-table td .status-badge {
+    margin-left: auto;
+  }
+
+  /* Smooth card entrance animation */
+  @keyframes cardSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .data-table tbody tr {
+    animation: cardSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  /* Stagger animation for multiple cards */
+  .data-table tbody tr:nth-child(1) {
+    animation-delay: 0.05s;
+  }
+  .data-table tbody tr:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+  .data-table tbody tr:nth-child(3) {
+    animation-delay: 0.15s;
+  }
+  .data-table tbody tr:nth-child(4) {
+    animation-delay: 0.2s;
+  }
+  .data-table tbody tr:nth-child(5) {
+    animation-delay: 0.25s;
   }
 }
 
@@ -784,7 +1171,41 @@ select.form-control {
   .chart-container {
     height: 250px;
   }
+
+  .data-table td {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .data-table td::before {
+    margin-bottom: 4px;
+  }
+
+  .data-table td .status-badge {
+    margin-left: 0;
+  }
+
+  .toast {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    max-width: none;
+  }
+
+  .modal-content {
+    border-radius: 10px;
+  }
+
+  .btn {
+    padding: 10px 16px;
+  }
+
+  .btn--sm {
+    padding: 6px 10px;
+  }
 }
+
 /* =========================================================================
    END: Responsive Design
    ========================================================================= */
